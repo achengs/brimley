@@ -1,5 +1,7 @@
 # Brimley
 
+[![Clojars Project](https://img.shields.io/clojars/v/com.github.achengs/brimley.svg)](https://clojars.org/com.github.achengs/brimley)
+
 This Clojure library parses an EDN file to create a menu tree for use in a terminal.
 Clone [brimley-demo](https://github.com/achengs/brimley-demo)
 to experiment with it locally.
