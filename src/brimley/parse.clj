@@ -120,12 +120,15 @@
   (swap! common-choices assoc k (ns-resolve *ns* v))
   nil)
 
-(defn parse-menu-edn
-  "parses a menu edn file and returns the always-available invisible choices
-  and the normal choices"
-  [f]
-  (let [common-choices (atom {})
-        data           (->> f slurp edn/read-string)]
+(defmulti process-menu (fn [x] (type x)))
+;; parses a menu edn file and returns the always-available invisible choices
+;; and the normal choices
+
+(defmethod process-menu java.lang.String [file-path]
+  (->> file-path slurp edn/read-string process-menu))
+
+(defmethod process-menu clojure.lang.PersistentVector [data]
+  (let [common-choices (atom {})]
     (if (s/valid? ::menu data)
       (let [choices (->> data
                          (partition 2)
@@ -135,5 +138,4 @@
         (println explanation)
         (flush)
         (throw(ex-info "brimley: contents of file did not conform to spec"
-                       {:file        f
-                        :explanation explanation}))))))
+                       {:explanation explanation}))))))
