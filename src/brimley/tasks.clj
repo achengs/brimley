@@ -76,7 +76,7 @@
 (defn perform-task [ctx-atm t]
   (if (keyword? t)
     ((keyword->task t) ctx-atm)
-    (apply t ctx-atm)))
+    (apply t [ctx-atm])))
 
 (defn expert-mode! [ctx-atm]
   (swap! ctx-atm assoc-in
